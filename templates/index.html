@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IMSCII v2</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles_index.css') }}">
+    </head>
+    <body>
+        <h1><u>IMSCII v2.0</u></h1>
+        <h3>Image → ASCII converter</h3>
+        <form action="/order" method="POST" enctype="multipart/form-data">
+            <label><strong>1.</strong> Image:</label>
+            <input type="file" name="image" accept="image/*" required>
+
+            <label><strong>2.</strong> Width in characters:</label>
+            <input type="number" name="width" value="80" min="40" max="200">
+
+            <div class="item">
+                <label for="a"><input type="checkbox" name="reversed" id="a"> Reversed for a white background</label>
+            </div>
+
+            <button type="submit"><strong>Process</strong></button>
+        </form>
+    </body>
+</html>

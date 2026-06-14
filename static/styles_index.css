@@ -1,0 +1,35 @@
+body {
+    font-family: Inter;
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: beige;
+}
+
+h1 {
+    font-family: Inter;
+}
+
+h3 {
+    font-family: Inter;
+}
+
+label {
+    font-family: Inter;
+    white-space: nowrap;
+}
+
+input, button {
+    font-family: Inter;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid;
+    background-color: lightgreen;
+}
+
+input[type=checkbox] {
+    accent-color: lightgreen;
+}
+
+button[type=submit] {
+    font-size: 25px;
+}

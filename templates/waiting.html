@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Processing...</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles_waiting.css') }}">
+    </head>
+    <body>
+        <div id="waiting">
+            <h2>Processing your ASCII art...</h2>
+            <p>Order ID: <b>{{ order_id }}</b></p>
+            <p>Jobs ahead of you: <span id="position">{{ position }}</span></p>
+            <p>Status: <span id="status">queued</span></p>
+        </div>
+
+        <div id="result">
+            <h2>Done!</h2>
+            <pre id="ascii_output"></pre>
+            <a id="download_btn" href="#"><button><strong>Download .txt</button></a>
+            <a href="/"><button>Convert another</strong></button></a>
+        </div>
+
+        <script>
+            const orderId = "{{ order_id }}";
+            const pollInterval = 300;
+
+            function checkStatus() {
+                fetch(`/status/${orderId}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('position').textContent = data.position;
+                    document.getElementById('status').textContent = data.status;
+                    if (data.status === 'done') {
+                        document.getElementById('waiting').style.display = 'none';
+                        document.getElementById('result').style.display = 'block';
+                        document.getElementById('ascii_output').textContent = data.ascii;
+                        document.getElementById('download_btn').href = `/download/${data.filename}`;
+                        clearInterval(poller);
+                    }
+                })
+                .catch(err => console.log('Poll error:', err));
+            }
+
+            checkStatus();
+            const poller = setInterval(checkStatus, pollInterval)
+        </script>
+    </body>
+</html>
