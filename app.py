@@ -43,6 +43,7 @@ def img_to_ascii(path, width=80, reversed=False):
 
 # THREADING
 def worker():
+    print("[Worker] Running...")
     while True:
         for order_id, job in list(jobs.items()):
             if job["status"] == "queued":
@@ -66,6 +67,7 @@ def worker():
                 time.sleep(0.2)
 
 def cleanup():
+    print("[Cleanup] Running...")
     while True:
         now = time.time()
         for order_id in list(jobs.keys()):
@@ -84,6 +86,18 @@ def cleanup():
                     del jobs[order_id]
                     print(f"[Cleanup] Deleted old job {order_id}")
         time.sleep(10)
+
+def setup():
+    print("[Setup] Deleting old files...")
+    for filename in os.listdir(UPLOAD_FOLDER):
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+
+        try:
+            os.remove(filepath)
+            print(f"[Setup] Deleted old file {filename}")
+        except Exception as e:
+            print(f"[Setup] Could not delete old file {filename}: {e}")
+    print("[Setup] Done!")
 
 
 # ROUTES    
@@ -138,6 +152,7 @@ def download(filename):
 
 # MAIN
 if __name__ == "__main__":
+    setup()
     threading.Thread(target=worker, daemon=True).start()
     threading.Thread(target=cleanup, daemon=True).start()
     app.run(host="0.0.0.0", port=80, threaded=True, debug=True)

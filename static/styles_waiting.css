@@ -1,5 +1,7 @@
+@import url("https://googleapis.com");
+
 body {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     max-width: 800px;
     margin: 50px auto;
     background-color: beige;
@@ -14,7 +16,7 @@ pre {
 }
 
 button {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     margin: 8px 0;
     display: inline-block;
     border: 2px solid;
